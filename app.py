@@ -11,7 +11,7 @@ import os
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
-app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql+pymysql://root@remotemysql.com:3306/orqyNUUokU'
+app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql+pymysql://orqyNUUokU@remotemysql.com:3306/orqyNUUokU'
 app.config['SQLALCHEMY_POOL_RECYCLE'] = 299
 db = SQLAlchemy(app)
 login_manager = LoginManager()
