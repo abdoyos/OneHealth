@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% block content %}
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+             <h1 class="h3 mb-2 text-gray-800">Threshold TIMISOARA</h1>
+         
+             <a href="#" data-toggle="modal" data-target="#Addnew" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-upload fa-sm text-white-50"></i> Add New </a>
+          </div>
+          <div>
+            {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+              <div class="alert .bg-gradient-success" style="background-color:lightgreen;" role="alert" >
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4 style="color: white;">{{ message }}</h4>
+              </div>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+              <div class="alert .bg-gradient-success" style="background-color:lightcoral" role="alert" >
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4 style="color: white;">{{ message }}</h4>
+              </div>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+     
+          </div>
+        <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+      
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                  
+                      <th>Type</th>
+                      <th>WS type</th>
+                      <th>Threshold</th>
+                      <th>Remarks</th>
+                 
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in data%}
+                    <tr>
+                     
+                    
+                      <td>{{item[0]}}</td>
+                      <td>{{item[1]}}</td>
+                      <td>{{item[2]}}</td>
+                      <td>{{item[3]}}</td>
+                    
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; FN LabSupport 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+>
+  
+  <!-- Logout Modal-->
+
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="Addnew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update this WorkStation</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{{url_for('add')}}" method="POST"id ="SHWS">
+          <div class="form-group">
+            <label>Host<sup style="color:red">*</sup></label>
+          <input type="text" id="upd" name="upd"  class="form-control form-control-user" required>
+         </div> 
+          
+          <div class="form-group">
+            <label>Comment</label>
+          <input type="text" class="form-control form-control-user" name="com"/>
+         </div> 
+          
+          <div class="form-group">
+            <label>Access<sup style="color:red">*</sup></label>
+          <select class="form-control form-control-user" name="AC">
+            <option value="2">SSH</option>
+              <option value="1">RSH</option>
+          </select>
+         </div> 
+         
+          <div class="form-group">
+            <label>WS Type<sup style="color:red">*</sup></label>
+            <select class="form-control form-control-user" name="WS">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+
+            </select>
+          </div> 
+          
+          <div class="form-group">
+            <label>Just Ping<sup style="color:red">*</sup></label>
+            <select class="form-control form-control-user" name="JP" >
+              <option value="Yes">Yes</option>
+              <option value="No">NO</option>
+            </select>
+          </div> 
+         
+          <div class="form-group">
+            <label>Ignore<sup style="color:red">*</sup></label>
+            <select class="form-control form-control-user" name="IG">
+              <option value="Yes">Yes</option>
+              <option value="No">NO</option>
+            </select>
+          </div> 
+          
+          <div class="form-group">
+            <label>Failed Logins<sup style="color:red">*</sup></label>
+            <select class="form-control form-control-user" name="FL">
+              <option value="Yes">Yes</option>
+              <option value="No">NO</option>
+            </select>
+          </div> 
+          
+          <div class="form-group">
+            <label>IS_Shutdown<sup style="color:red">*</sup></label>
+            <select class="form-control form-control-user" name="SH" >
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div> 
+          <div class="form-group">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+  
+  {% endblock %}

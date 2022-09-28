@@ -1,0 +1,95 @@
+<html>
+<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>LAB Support Timisoara</title>
+
+  <!-- Custom fonts for this template -->
+  <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="static/css/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="static/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<body class="bg-gray-200">
+    
+    <div class="p-4 max-w-xl mx-auto" id='app'>
+        <div class="my-3 rounded md:rounded-lg container mx-auto bg-teal-400 shadow-xl">
+        <div class="flex mx-auto border-b w-3/5 justify-center text-3xl lg:text-5xl md:text-5xl sm:text-4xl tracking-wider font-light text-gray-100">
+            To-do List
+        </div>
+        <form name="newform" class="flex flex-col ml-2 sm:ml-12 md:ml-16 lg:ml-16  py-4" v-on:submit.prevent="addItem">
+            <label for="newitem" class="text-2xl text-gray-100 font-light">Add to the list</label>
+            <div class="flex">
+                <input type="text" required v-model="todo" class="px-2 py-0 sm:py-1 md:py-1 lg:py-2 focus:outline-none border shadow-lg">
+                <button class="border shadow-lg text-indigo-600 mx-2 bg-teal-200 rounded uppercase font-semibold px-1 sm:px-2 md:px-2 lg:px-3 py-0 sm:py-2 md:py-2 lg:py-2 hover:opacity-75" type="submit">
+                    Add item
+                </button>
+            </div>
+        </form>
+        
+        <ul class='w-11/12 py-4 mx-auto'>
+            <li class='flex justify-between text-white bg-teal-200 p-2 my-1' v-for='item in todos'>
+                <span class='px-2 text-lg lg:text-xl' v-bind:class='item.isDone ? "line-through opacity-50 text-blue-600" : "text-teal-700"' >{{item.text}}</span>
+                <div class="flex">
+                    <button class="px-2 items-center text-blue-600 focus:outline-none " @click='toggleDone(item)'>
+                        <i aria-hidden="true" class="material-icons">
+                            {{ item.isDone ? 'check_box' : 'check_box_outline_blank' }}
+                        </i>
+                    </button>
+                    <button class="px-2 text-red-500 focus:outline-none" @click='deleteItem(item)'>
+                        <i aria-hidden="true" class="material-icons">delete</i>
+                    </button>
+                </div>
+            </li>
+        </ul>
+        <div class="flex mx-auto justify-center py-4 text-white font-light text-xl" v-if='!todos.length'>Your todo list is empty.</div>
+    </div>
+    </div>
+
+    <div class="bg-indigo-500 w-full text-center py-2 text-white mt-24">
+        Made by- Ankit Yadav &copy; 2020</div>
+
+        <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="/static/js/sb-admin-2.min.js"></script>
+<script>
+		var app = new Vue({
+  el: "#app",
+  data: {
+    todos: [
+        { id: 0, text: "Learn Vue Basics", isDone: true },
+        { id: 1, text: "Learn ReactJS", isDone: false },
+        { id: 2, text: "Learn Django", isDone: false },
+    ],
+    todo: "",
+  },
+  methods: {
+    deleteItem: (item) => {
+      let index = app.todos.indexOf(item);
+      app.todos.splice(index, 1);
+    },
+    addItem: () => {
+      if (app.todo) {
+        app.todos.push({ id: app.todos.length, text: app.todo, isDone: false });
+        app.todo = "";
+      } else {
+      }
+    },
+    toggleDone: (item) => {
+      item.isDone = !item.isDone;
+    },
+  },
+});
+</script>
+</body>
+</html>

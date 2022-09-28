@@ -1,0 +1,752 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title> LAB Support | {{Title}}</title>
+    {% block extrahead %}  {% endblock %}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+  
+    <title>LAB Support Timisoara</title>
+  
+    <!-- Custom fonts for this template -->
+    <link href="{{url_for('.static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('.static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
+  
+    <!-- Custom styles for this page -->
+    <link href="{{url_for('.static', filename='vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+  
+    <style>
+        html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+a{
+  text-decoration: none !important;
+}
+
+/* CATEGORY GRID STYLING */
+.high-padding{
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+
+.knowledge-list2 {
+    box-shadow: 0 0 25px rgba(0,0,0,.1);
+    -webkit-box-shadow: 0px 0px 25px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0 0 25px rgba(0,0,0,.1);
+    -ms-box-shadow: 0 0 25px rgba(0,0,0,.1);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+.knowledge-list2 .heading-submenu {
+    background: #fff;
+    padding: 30px 0;
+}
+.knowledge-list2 a.count-link {
+    display: block;
+    background: #4991fd;
+    color: #fff;
+    text-align: left;
+    padding: 15px 30px;
+    font-weight: 600;
+    font-size: 16px;
+    -moz-transition: all 250ms ease;
+    -o-transition: all 250ms ease;
+    -webkit-transition: all 250ms ease;
+    -ms-transition: all 250ms ease;
+    transition: all 250ms ease;
+}
+.knowledge-list2 h3.heading {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+.knowledge-list2 ul.submenu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.knowledge-list2 h3.heading a {
+    font-weight: 600;
+    font-size: 24px;
+    padding: 0 30px;
+    color: #252525;
+    transition: all 250ms ease;
+    -webkit-transition: all 250ms ease;
+    -moz-transition: all 250ms ease;
+    -o-transition: all 250ms ease;
+    -ms-transition: all 250ms ease;
+}
+.knowledge-list2 h3.heading a i {
+    padding-right: 10px;
+}
+.knowledge-list2 li.post_title {
+    margin: 0;
+    line-height: 1.5;
+    font-size: 15px;
+    padding: 8px 30px;
+    -moz-transition: all 250ms ease;
+    -o-transition: all 250ms ease;
+    -webkit-transition: all 250ms ease;
+    -ms-transition: all 250ms ease;
+    transition: all 250ms ease;
+    text-align: left;
+    color: #252525;
+    opacity: .7;
+}
+.knowledge-list2 li.post_title:hover {
+    background: #f5f5f5;
+}
+.knowledge-list2 li.post_title a {
+    color: #252525;
+}
+.knowledge-list2 a.count-link:hover {
+    background: #252525;
+    color: #fff;
+}
+.knowledge-list2 li.post_title::before {
+    display: inline-block;
+    font-family: FontAwesome;
+    font-weight: normal;
+    font-size: 15px;
+    width: 20px;
+    background: transparent !important;
+    content: "\f0f6";
+    color: #65bc7b;
+    margin-right: 10px;
+}
+ 
+    </style>
+    </head>
+
+    <body id="page-top">
+    
+      <!-- Page Wrapper -->
+      <div id="wrapper">
+    
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion  " id="accordionSidebar">
+    
+          <!-- Sidebar - Brand -->
+          <a class="sidebar-brand d-flex align-items-center justify-content-center" >
+            <div class="sidebar-brand-icon rotate-n-15">
+              <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">LAB Support Monitoring</div>
+          </a>
+    
+          <!-- Divider -->
+          <hr class="sidebar-divider my-0">
+          <br>
+                <!-- Nav Item - Dashboard 
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+                </li>
+          
+                <!-- Divider 
+                <hr class="sidebar-divider">
+              -->
+                <!-- Heading -->
+                     <!-- Heading -->
+                     <li class="nav-item ">
+                      <a class="nav-link" href="{{url_for('daily')}}">
+                        <i class="fas fa-fw fa-table"></i>
+                        <span>Daily Monitoring</span></a>
+                    </li>
+                    <hr class="sidebar-divider d-none d-md-block">
+                <div class="sidebar-heading">
+                  Sites
+                </div>
+          
+                <!-- Nav Item - Pages Collapse Menu -->
+                
+                <!-- Nav Item - Tables -->
+                
+                <li class="nav-item active">
+                  <a class="nav-link" href="{{url_for('Timis')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Timisoara</span></a>
+                </li>
+               <!--  <li class="nav-item ">
+                  <a class="nav-link" href="{{url_for('Lan')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Lannion</span></a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="{{url_for('Stutt')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Stuttgart</span></a>
+                </li>-->
+          
+                <!-- Divider -->
+               
+      
+                <li class="nav-item ">
+                  <a class="nav-link" href="{{url_for('Timis_Threshold')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Threshold Tim</span></a>
+                </li>
+                <!-- <li class="nav-item ">
+                  <a class="nav-link" href="{{url_for('Lan_Threshold')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Threshold Lan</span></a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="{{url_for('Stutt_Threshold')}}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Threshold Stutt</span></a>
+                </li>-->
+          
+             <!--    <hr class="sidebar-divider d-none d-md-block">
+                <div class="sidebar-heading">
+                  Opale Tiekcts      </div>
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{{url_for('OPALE')}}">
+                      <i class="fas fa-fw fa-table"></i>
+                      <span>OPALE HCL Tickets</span></a>
+                  </li>
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{{url_for('OPALE_ticket_how')}}">
+                      <i class="fas fa-fw fa-table"></i>
+                      <span>HCL Guide Tickets</span></a>
+                  </li>-->
+                    <hr class="sidebar-divider d-none d-md-block">
+                <div class="sidebar-heading">
+                  Backup Invertory      </div>
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{{url_for('Backup_d')}}">
+                      <i class="fas fa-fw fa-table"></i>
+                      <span>Backaups Details</span></a>
+                  </li>
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{{url_for('create_backup')}}">
+                      <i class="fas fa-fw fa-table"></i>
+                      <span>Create VM Backup</span></a>
+                  </li>
+      
+                <hr class="sidebar-divider d-none d-md-block">
+                <div class="sidebar-heading">
+                  Automations Tasks     </div>
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{{url_for('OPALE')}}">
+                      <i class="fas fa-fw fa-table"></i>
+                      <span>Ansible Tasks</span></a>
+                  </li>
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{{url_for('OPALE_ticket_how')}}">
+                      <i class="fas fa-fw fa-table"></i>
+                      <span>Puppet Tasks</span></a>
+                  </li>
+      
+                <hr class="sidebar-divider d-none d-md-block">
+                <div class="sidebar-heading">
+                  Knowledge Base     </div>
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{{url_for('Knowledgebase')}}">
+                      <i class="fas fa-fw fa-table"></i>
+                      <span>Documents & links</span></a>
+                  </li>
+         <br>
+                <!-- Sidebar Toggler (Sidebar) -->
+                <div class="text-center d-none d-md-inline">
+                  <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                </div>
+              </ul>
+              <!-- End of Sidebar -->
+          
+              <!-- Content Wrapper -->
+              <div id="loader" ></div>
+              <div id="content-wrapper" class="d-flex flex-column">
+          
+                <!-- Main Content -->
+                <div id="content">
+          
+                  <!-- Topbar -->
+                  <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <form class="form-inline">
+                      <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                      </button>
+                    </form>
+          
+                    <!-- Topbar Search -->
+                    
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+          
+                      <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                      <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                          <form class="form-inline mr-auto w-100 navbar-search">
+                            <div class="input-group">
+                              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                              <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                  <i class="fas fa-search fa-sm"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                      </li>
+          
+                      <!-- Nav Item - Alerts -->
+                     
+          
+                      <!-- Nav Item - Messages -->
+                     
+                      <div class="topbar-divider d-none d-sm-block"></div>
+          
+                      <!-- Nav Item - User Information -->
+                      <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span class="mr-2 d-none d-lg-inline text-gray-600">Admin</span>
+                          <img class="img-profile rounded-circle" src="{{url_for('.static',filename='img/admin.png')}}">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                          
+                      
+                          <a class="dropdown-item" href="{{url_for('login')}}" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout
+                          </a>
+                        </div>
+                      </li>
+          
+                    </ul>
+          
+                  </nav>
+
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+             <h1 class="h3 mb-2 text-gray-800">Knowledge Base</h1>     
+          </div>
+        <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+        
+            <div class="container high-padding">
+              <!-- KB CATEGORY -->
+              <div class="col-md-12">
+                <div class="knowledge-list2">
+                    <div class="heading-submenu">
+                        <h3 class="heading">
+                            <a class="heading-link" href="https://tikidocs.modeltheme.com/knowledgebase-category/introduction">
+                                <i class="fa fa-dot-circle-o" aria-hidden="true"></i>BENCHCOM
+                            </a>
+                        </h3>
+                        <ul class="submenu">
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/how-to-find-topics/" title="How to find topics?">How to find topics?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/how-to-use-this-documentation/" title="How to use this documentation?">How to use this documentation?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/what-is-included-and-why/" title="What is included and why?">What is included and why?</a></li>
+                            <li class="post_title"><a href="http://pcrebondtm:8086/#Documentation%20Benchcom" target="_blank" title="Basic knowledge requirements">Benchcom documentaion</a></li>
+                            <li class="post_title"><a href="https://nokia-my.sharepoint.com/:f:/p/abdu_abdellatif/EkDlFpk12T9CmZp_4I9R7A0BKgl5mzX1hwrSgUCqo2J3ag?e=yra9V9" target="_blank" title="Useful tranining sessions">Useful tranining session</a></li>
+                        </ul>
+                    </div><a class="count-link" href="https://tikidocs.modeltheme.com/knowledgebase-category/introduction">5 Articles in this category</a>
+                </div>
+              </div>
+              <!-- KB CATEGORY -->
+              <div class="col-md-12">
+                <div class="knowledge-list2">
+                    <div class="heading-submenu">
+                        <h3 class="heading">
+                            <a class="heading-link" href="https://tikidocs.modeltheme.com/knowledgebase-category/about-products">
+                                <i class="fa fa-dot-circle-o" aria-hidden="true"></i>OPALE
+                            </a>
+                        </h3>
+                        <ul class="submenu">
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/how-to-find-topics/" title="How to find topics?">How to find topics?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/how-to-use-this-documentation/" title="How to use this documentation?">How to use this documentation?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/what-is-included-and-why/" title="What is included and why?">What is included and why?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/basic-knowledge-requirements/" title="Basic knowledge requirements">Basic knowledge requirements</a></li>
+                            <li class="post_title"><a href="{{url_for('OPALE_ticket_how')}}" title="Getting Started &amp; What is next">Getting Started &amp; What is next</a></li>
+                        </ul>
+                    </div><a class="count-link" href="https://tikidocs.modeltheme.com/knowledgebase-category/about-products">5 Articles in this category</a>
+                </div>
+              </div>
+              <!-- KB CATEGORY -->
+              <div class="col-md-12">
+                <div class="knowledge-list2">
+                    <div class="heading-submenu">
+                        <h3 class="heading">
+                            <a class="heading-link" href="https://tikidocs.modeltheme.com/knowledgebase-category/api-guide-lines">
+                                <i class="fa fa-dot-circle-o" aria-hidden="true"></i>Puppet & Ansible
+                            </a>
+                        </h3>
+                        <ul class="submenu">
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/how-to-find-topics/" title="How to find topics?">How to find topics?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/how-to-use-this-documentation/" title="How to use this documentation?">How to use this documentation?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/what-is-included-and-why/" title="What is included and why?">What is included and why?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/basic-knowledge-requirements/" title="Basic knowledge requirements">Basic knowledge requirements</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/getting-started-what-is-next/" title="Getting Started &amp; What is next">Getting Started &amp; What is next</a></li>
+                        </ul>
+                    </div><a class="count-link" href="https://tikidocs.modeltheme.com/knowledgebase-category/api-guide-lines">5 Articles in this category</a>
+                </div>	
+              </div>
+              <!-- KB CATEGORY -->
+              <div class="col-md-12">
+                <div class="knowledge-list2">
+                    <div class="heading-submenu">
+                        <h3 class="heading">
+                            <a class="heading-link" href="https://tikidocs.modeltheme.com/knowledgebase-category/payment-methods">
+                                <i class="fa fa-dot-circle-o" aria-hidden="true"></i>SPOL & Defect Search Apps.
+                            </a>
+                        </h3>
+                        <ul class="submenu">
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/how-to-find-topics/" title="How to find topics?">How to find topics?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/how-to-use-this-documentation/" title="How to use this documentation?">How to use this documentation?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/what-is-included-and-why/" title="What is included and why?">What is included and why?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/basic-knowledge-requirements/" title="Basic knowledge requirements">Basic knowledge requirements</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/getting-started-what-is-next/" title="Getting Started &amp; What is next">Getting Started &amp; What is next</a></li>
+                        </ul>
+                    </div><a class="count-link" href="https://tikidocs.modeltheme.com/knowledgebase-category/payment-methods">5 Articles in this category</a>
+                </div>
+              </div>
+              <!-- KB CATEGORY -->
+              <div class="col-md-12">
+                <div class="knowledge-list2">
+                    <div class="heading-submenu">
+                        <h3 class="heading">
+                            <a class="heading-link" href="https://tikidocs.modeltheme.com/knowledgebase-category/configuration">
+                                <i class="fa fa-dot-circle-o" aria-hidden="true"></i>VM Backaups Guide
+                             </a>
+                        </h3>
+                        <ul class="submenu">
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/how-to-find-topics/" title="How to find topics?">How to find topics?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/how-to-use-this-documentation/" title="How to use this documentation?">How to use this documentation?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/what-is-included-and-why/" title="What is included and why?">What is included and why?</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/basic-knowledge-requirements/" title="Basic knowledge requirements">Basic knowledge requirements</a></li>
+                            <li class="post_title"><a href="https://tikidocs.modeltheme.com/knowledgebase/getting-started-what-is-next/" title="Getting Started &amp; What is next">Getting Started &amp; What is next</a></li>
+                        </ul>
+                    </div><a class="count-link" href="https://tikidocs.modeltheme.com/knowledgebase-category/configuration">5 Articles in this category</a>
+                </div>
+              </div>
+              <!-- KB CATEGORY -->
+
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; FN LabSupport 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+
+      <script src="{{url_for('.static', filename='vendor/jquery/jquery.min.js')}}"></script>
+      <script src="{{url_for('.static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    
+      <!-- Core plugin JavaScript-->
+      <script src="{{url_for('.static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+    
+      <!-- Custom scripts for all pages-->
+      <script src="{{url_for('.static', filename='js/sb-admin-2.min.js')}}"></script>
+    
+      <!-- Page level plugins -->
+      <script src="{{url_for('.static', filename='vendor/datatables/jquery.dataTables.min.js')}}"></script>
+      <script src="{{url_for('.static', filename='vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+    
+      <!-- Page level custom scripts -->
+      <script src="{{url_for('.static', filename='js/demo/datatables-demo.js')}}"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.15.1/dist/sweetalert2.all.min.js"></script>
+      <script>
+             $(document).on("click", ".open-AddBookDialog", function () {
+                  var x = $(this).attr('data-row-val');
+                  //$(".modal-body #del").val( x );
+                  document.getElementById("del").value = x
+                  //alert(document.getElementById("del").value);
+             });
+             $(document).on("click", ".open-AddBookDialog", function () {
+                  var x = $(this).attr('data-row-val');
+                  //$(".modal-body #del").val( x );
+                  document.getElementById("upd").value = x
+                  //alert(document.getElementById("del").value);
+             });
+             $(document).on("click", ".open-AddBookDialog", function () {
+                  var x = $(this).attr('data-row-val');
+                  //$(".modal-body #del").val( x );
+                  document.getElementById("shs").value = x
+                  //alert(document.getElementById("del").value);
+             });
+             $(document).on("click", ".open-AddBookDialog", function () {
+                  var x = $(this).attr('data-row-val1');
+                  //$(".modal-body #del").val( x );
+                  document.getElementById("rcode").value = x
+                  //alert(document.getElementById("del").value);
+             });
+             
+      </script>
+      <script>
+        $(document).ready(function () {
+    
+            $("#SHWS").on('submit',function(e){
+    
+                //stop submitting the form to see the disabled button effect
+                //e.preventDefault();
+    
+                //disable the submit button
+                $("#submit").attr("disabled", true);
+                $('#shutdownWS').modal('hide');
+                  document.getElementById('loader').style.display = 'block';
+                //disable a normal button
+    
+                return true;
+    
+            });
+        });
+    </script>
+    <script>
+      $(document).ready(function () {
+    
+          $("#SHWSs").on('submit',function(e){
+    
+              //stop submitting the form to see the disabled button effect
+              //e.preventDefault();
+    
+              //disable the submit button
+              $("#submit").attr("disabled", true);
+              $('#shutdownWS').modal('hide');
+                document.getElementById('loader').style.display = 'block';
+              //disable a normal button
+    
+              return true;
+    
+          });
+      });
+    </script>
+    <script>
+    
+      function debounce(func, threshold) {
+    var timeout;
+    
+    return function() {
+        var context = this,
+            args = arguments;
+    
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+    
+        timeout = setTimeout(function() {
+            func.apply(context, args);
+    
+            timeout = null;
+        }, threshold || 250);
+    };
+    }
+    
+    SessionTimeout = (function() {
+    var session_duration = 900,
+        session_timeout_id,
+        logout_duration = 10,
+        session_timeout_duration = (session_duration - logout_duration) * 1000,
+        logout_id,
+        logout_timeout_duration = logout_duration * 1000,
+        events = 'keydown mousedown',
+        notification_element;
+    
+    return {
+        init: function() {
+            var that = this;
+    
+            $(document).on($.trim((events + ' ').split(' ').join('.sessiontimer ')), debounce(function () {
+                that.handler.apply(that);
+            }, 500));
+    
+            this.startIdleTimeout();
+        },
+    
+        handler: function() {
+            // reset session timeout
+            clearTimeout(session_timeout_id);
+    
+            this.startIdleTimeout();
+        },
+    
+        startIdleTimeout: function () {
+            var that = this;
+    
+            session_timeout_id = setTimeout(function () {
+                that.idle.apply(that);
+            }, session_timeout_duration);
+        },
+    
+        idle: function() {
+            // create bar
+            notification_element = this.createTimeoutNotification();
+    
+            // display bar
+            notification_element.slideDown();
+    
+            // remove events
+            $(document).unbind('.sessiontimer');
+    
+            // start logout timeout
+            this.startLogoutTimeout();
+    
+            // start logout countdown
+            this.startLogoutCountdown();
+    
+            // add logout events
+            this.attachTimeoutNotificationEvents();
+        },
+    
+        createTimeoutNotification: function() {
+            var notification_element = $('<div  class="session-timeout-notification">').html(function () {
+                return [
+                    '<strong>Hey! {{name}} </strong> you will be logged off in <strong class="time">' + logout_duration + '</strong> seconds due to inactivity. '
+                ].join('');
+            });
+    
+            notification_element.prependTo('header');
+    
+            return notification_element;
+        },
+    
+        removeTimeoutNotification: function() {
+            notification_element.slideUp(400, function() {
+                $(this).remove();
+            });
+        },
+    
+        attachTimeoutNotificationEvents: function() {
+            var that = this,
+                dismiss_element = notification_element.find('a');
+    
+            dismiss_element.on('click', function() {
+                // reset timer to prevent logout
+                clearTimeout(logout_id);
+    
+                that.removeTimeoutNotification();
+    
+                that.init();
+            });
+        },
+    
+        startLogoutTimeout: function() {
+            var that = this;
+    
+            logout_id = setTimeout(function() {
+    
+              Swal.fire({
+    title: 'Session Expired',
+    text: "Do you want to extend your session?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    timer: 60000,
+    confirmButtonText: 'Yes, Continue!'
+    }).then((result) => {
+    if (result.value) {
+      Swal.fire(
+        'success!',
+        'Your session has been extened for 15 minute.',
+        'success'
+      )
+      location.reload();
+    }
+    else{
+      window.location.replace('{{url_for('logoutinactive')}}');
+    
+    }
+    })
+    
+    
+                that.removeTimeoutNotification.apply(that);
+            }, logout_timeout_duration);
+        },
+    
+        startLogoutCountdown: function(time) {
+            var that = this,
+                time = time || logout_duration - 1;
+    
+            setTimeout(function() {
+                notification_element.find('.time').html(time);
+    
+                time--;
+    
+                if (time > 0) {
+                    that.startLogoutCountdown.call(that, time);
+                }
+            }, 1000);
+        }
+    };
+    }());
+    
+    SessionTimeout.init();
+      </script>
+    </body>
+    
+    </html>
+    
+  

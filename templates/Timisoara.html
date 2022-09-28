@@ -1,0 +1,324 @@
+{% extends "base.html" %}
+{% block content %}
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+             <h1 class="h3 mb-2 text-gray-800">Timisoara</h1>
+             <a href="#"  data-toggle="modal" data-target="#shutdownall" class="d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"><i class="fas fa-warning fa-sm text-white-50"></i> ShutDown ALL</a>
+             <button type="button" data-toggle="modal" data-target="#DailyAudit" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm">Daily Monitoring</button>           
+          </div>
+          <div>
+            {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+              <div class="alert .bg-gradient-success" style="background-color:lightgreen;" role="alert" >
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4 style="color: white;">{{ message }}</h4>
+              </div>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+              <div class="alert .bg-gradient-success" style="background-color:lightcoral" role="alert" >
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4 style="color: white;">{{ message }}</h4>
+              </div>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+     
+          </div>
+        <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+      
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                  
+                      <th>Hostname</th>
+                      <th>Comments</th>
+                      <th>Access</th>
+                      <th>WS Type</th>
+                      <th>Just Ping</th>
+                      <th>Ignore</th>
+                      <th>Failed Logins</th>
+                      <th>Is_Shutdown</th>
+                      <th>Shutdown</th>
+                      <th>Update</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in data%}
+                    <tr>
+                     
+                    
+                      <td>{{item[0]}}</td>
+                      <td>{{item[1]}}</td>
+                      <td>{{item[2]}}</td>
+                      <td>{{item[3]}}</td>
+                      <td>{{item[4]}}</td>
+                      <td>{{item[5]}}</td>
+                      <td>{{item[6]}}</td>
+                      {% if 'Y' in item[7] %}
+                      <td style="background-color:honeydew;">{{item[7]}}</td>
+                      {% else %}
+                      <td>{{item[7]}}</td>
+                      {% endif %}
+                      <td> <button  type='button' data-toggle="modal" data-row-val="{{item[0]}}" data-row-val1="{{item[2]}}" data-target="#shutdownWS" class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-warning shadow-sm"> ShutDown</a></td>
+                      <td><button  type='button' data-toggle="modal" data-row-val="{{item[0]}}" data-target="#Addnew" class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Update </button></td>
+                      <td><button  type='button' data-toggle="modal"  data-row-val="{{item[0]}}"  data-target="#Delete" class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"> Delete </button></td>
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; FN LabSupport 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <div class="modal" id="DailyAudit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Run the Daily Audit  <strong>This</strong> </h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form action="{{url_for('DailyAudit')}}" method="POST"id ="SHWS">
+        <div class="modal-body">
+          Please Confirm in order to continue.
+   <br> Please notice that this operation will take while, 
+   <br> An email will be sent shortly!.
+       </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Logout Modal-->
+
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="{{url_for('login')}}">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="Delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Deletion Confirmation</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">Are you sure to delete this WorkStation from the monitoing.</div>
+        <form action="{{url_for('delete')}}" method="POST"id ="SHWSdel">
+          <input type="hidden" name="del" id="del" value="" >
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+  <div class="modal fade" id="shutdownall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Are you sure to Shutdown all Workstation?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{{url_for('SHALL')}}" method="POST" id ="SHWSs">
+          Please enter the Shutdown password in order to continue.</div>
+          <div  class="form-group">
+            <div class="col-lg-9">
+          <input type="password" class="form-control form-control-user" style="width: 100%;">
+        </div>  
+        </div> 
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="shutdownWS" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Are you sure to Shutdown <strong>This</strong> Workstation?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+          Please enter the Shutdown password in order to continue.</div>
+          <form action="{{url_for('SHWS')}}" method="POST"id ="SHWSs">
+            <input type="hidden" name="shs" id="shs" value="" >
+            <input type="hidden" name="rcode" id="rcode" value="">
+          <div  class="form-group">
+            <div class="col-lg-9">
+          <input type="password" class="form-control form-control-user" name="pass" style="width: 100%;" required>
+        </div>  
+        </div> 
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="Addnew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update this WorkStation</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{{url_for('Updates')}}" method="POST"id ="SHWSupd">
+          <div class="form-group">
+            <label>Host</label>
+          <input type="text" id="upd" name="upd" value="" class="form-control form-control-user" readonly>
+         </div> 
+          
+          <div class="form-group">
+            <label>Comment</label>
+          <input type="text" class="form-control form-control-user" name="com"/>
+         </div> 
+          
+          <div class="form-group">
+            <label>Access<sup style="color:red">*</sup></label>
+          <select class="form-control form-control-user" name="AC">
+            <option value="2">SSH</option>
+              <option value="1">RSH</option>
+          </select>
+         </div> 
+         
+          <div class="form-group">
+            <label>WS Type<sup style="color:red">*</sup></label>
+            <select class="form-control form-control-user" name="WS">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+
+            </select>
+          </div> 
+          
+          <div class="form-group">
+            <label>Just Ping<sup style="color:red">*</sup></label>
+            <select class="form-control form-control-user" name="JP" >
+              <option value="Yes" selected>Yes</option>
+              <option value="No">NO</option>
+            </select>
+          </div> 
+         
+          <div class="form-group">
+            <label>Ignore<sup style="color:red">*</sup></label>
+            <select class="form-control form-control-user" name="IG">
+              <option value="Yes" selected>Yes</option>
+              <option value="No">NO</option>
+            </select>
+          </div> 
+          
+          <div class="form-group">
+            <label>Failed Logins<sup style="color:red">*</sup></label>
+            <select class="form-control form-control-user" name="FL">
+              <option value="Yes" selected >Yes</option>
+              <option value="No">NO</option>
+            </select>
+          </div> 
+          
+          <div class="form-group">
+            <label>IS_Shutdown<sup style="color:red">*</sup></label>
+            <select class="form-control form-control-user" name="SH" >
+              <option value="Yes" selected>Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div> 
+          <div class="form-group">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+  {% endblock %}
+ 
+  

@@ -1,0 +1,190 @@
+ 
+{% extends "base.html" %}
+{% block content %}
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+             <h1 class="h3 mb-2 text-gray-800">Park street clinic Schedule</h1>     
+          </div>
+          <div>
+            {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+              <div class="alert .bg-gradient-success" style="background-color:lightgreen;" role="alert" >
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4 style="color: white;">{{ message }}</h4>
+              </div>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+              <div class="alert .bg-gradient-success" style="background-color:lightcoral" role="alert" >
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4 style="color: white;">{{ message }}</h4>
+              </div>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+     
+          </div>
+        <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+        
+            <div class="card-body">
+              <form action="" method="POST"id ="SHWS">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="first">Doctor Name</label>
+                      <select class="js-example-basic-single form-control  form-control-user" name="vmhost" id="vmhost" >
+                        <option selected>Select Doctor Name</option>
+                        {% for item in data1%}
+                        <option value="docname">{{item[0]}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+            
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="last">Doctor ID</label>
+                      <select class="form-control form-control-user" name="docid" id="docid" >
+                        <option selected>Select Doctor ID</option>
+                        {% for item in data2%}
+                        <option value="docid">{{item[0]}}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <!--  col-md-6   -->
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="last">Speciality</label>
+                      <select class="form-control form-control-user" name="holo" id="holo" >
+                        <option >Select Speciality</option>
+                        <option value="" selected>Pediatrics </option>
+        
+                      </select>
+                    </div>
+                  </div>
+                </div>
+            
+            
+                <!--  <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="company">Schedule Month</label>
+                      <select class="form-control form-control-user" name="bkptype" id="bkptype" >
+                        <option selected>Select Type</option>
+                        <option value="current" selected>Current Month</option>
+                        <option value="last">Last</option>
+                      </select>
+                    </div>
+                  </div>
+
+          
+                </div>
+              -->
+              
+                  <!--  col-md-6   -->
+                  <br>
+                <!--  row   -->
+                <div class="row">
+                  <div class="col-lg-7">
+                <button type="submit" style="width:50%;position:relative;left:60% ;" class="btn btn-primary">Search</button>
+              </div>
+            </div>
+                <br>
+                <br>
+                <div class="row">
+                  
+                  <!--  col-md-6   -->
+                 
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                      <thead>
+                        <tr>
+                      
+                          <th>ID</th>
+                          <th> Hostname</th>
+                          <th>IP</th>
+                          <th>description</th>
+                         
+                          <th>VM's host</th>
+                          <th>Backup host</th>
+                          <th>Backup location</th>
+                          <th>Backup location 2</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for item in data %}
+                        <tr>
+                         
+                        
+                          <td>{{item[0]}}</td>
+                          <td>{{item[1]}}</td>
+                          <td>{{item[2]}}</td>
+                          <td>{{item[3]}}</td>
+                         
+                          <td>{{item[6]}}</td>
+                         
+                      
+                          <td>{{item[7]}}</td>
+                    
+                          <td>{{item[8]}}</td>
+                       
+                          <td>{{item[9]}}</td>
+                          <td><button  type='button' data-toggle="modal" data-row-val="{{item[0]}}" data-row-val1="{{item[3]}}" data-row-val2="{{item[8]}}" data-row-val3="{{item[9]}}"  data-target="#shutdownall" class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Update </button></td>
+                        
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                  <!--  col-md-6   -->
+                </div>
+                <!--  row   -->
+            
+            
+              
+              
+            
+        <br>
+        <br>
+            
+            
+          
+              </form>
+          </div>
+        </div>
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; U3's 2022</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+    {% endblock %}
+  

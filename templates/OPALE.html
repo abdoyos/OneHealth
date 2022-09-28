@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% block content %}
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+             <h1 class="h3 mb-2 text-gray-800">OPALE cloud Tickets</h1>
+         
+             <a href="#" data-toggle="modal" data-target="#Addnew" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-upload fa-sm text-white-50"></i> Add New </a>
+          </div>
+          <div>
+            {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+              <div class="alert .bg-gradient-success" style="background-color:lightgreen;" role="alert" >
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4 style="color: white;">{{ message }}</h4>
+              </div>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+              <div class="alert .bg-gradient-success" style="background-color:lightcoral" role="alert" >
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4 style="color: white;">{{ message }}</h4>
+              </div>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+     
+          </div>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+      
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                  
+                      <th>Ticket ID</th>
+                      <th>HCL Ticket</th>
+                      <th>Creation date</th>
+                      <th>Status</th>
+                      <th>IS Escalated</th>
+                      <th>Contact Person</th>
+                      <th>Resolution date</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in data %}
+                    <tr>
+                     
+                    
+                      <td>{{item[0]}}</td>
+                      <td>{{item[1]}}</td>
+                      <td>{{item[2]}}</td>
+                      <td>{{item[3]}}</td>
+                      <td>{{item[4]}}</td>
+                      <td>{{item[5]}}</td>
+                      <td>{{item[6]}}</td>
+                      <td><button  type='button' data-toggle="modal" data-row-val="{{item[0]}}" data-row-val2="{{item[3]}}" data-row-val3="{{item[5]}}"  data-target="#shutdownall" class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Update </button></td>
+                    
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; FN LabSupport 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Content Wrapper -->
+
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+  
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal fade" id="Addnew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Adding New Monitoring HCL Ticket</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+            <form action="{{url_for('OPALE')}}" method="POST" id ="MN">
+          <div class="form-group">
+            <label>HCL Ticket</label>
+          <input type="text" name="HCL" id ="HCL" class="form-control form-control-user" required>
+         </div> 
+          
+          <div class="form-group">
+            <label>Creation date</label>
+          <input type="date" name="Cdate" id="Cdate" class="form-control form-control-user" >
+         </div> 
+          
+          <div class="form-group">
+            <label>Status</label>
+          <select class="form-control form-control-user" name="Status">
+            <option value="Open">Open</option>
+              <option value="close">Close</option>
+          </select>
+         </div> 
+         
+          <div class="form-group">
+            <label>IS Escalated</label>
+            <select class="form-control form-control-user" name="Escalated">
+              <option value="YES">YES</option>
+              <option value="NO" SELECTED >NO</option>
+              
+
+            </select>
+          </div> 
+          
+          <!--<div class="form-group">
+            <label>Resolution Date</label>
+            <input type="date" class="form-control form-control-user" name=Rdate/>
+          </div> 
+        -->
+          
+          <div class="form-group">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  <div class="modal fade" id="shutdownall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Update HCL Ticket</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{url_for('OPALE_UPDATE')}}" method="POST" id="klo">
+                <input type="hidden" name="del" id="del" value="" >
+                   <div class="form-group">
+                <label>Ticket ID</label>
+              <input type="text" id="upd" name="upd" class="form-control form-control-user" readonly>
+             </div> 
+              
+              <div class="form-group">
+                <label>Status</label>
+              <select class="form-control form-control-user" name="Status1">
+                <option value="2">Open</option>
+                  <option value="1">Close</option>
+              </select>
+             </div> 
+             
+              <div class="form-group">
+                <label>IS Escalated</label>
+                <select class="form-control form-control-user" name="Escalated1">
+                  <option value="YES">YES</option>
+                  <option value="NO" SELECTED >NO</option>
+                </select>
+              </div> 
+              
+              <div class="form-group">
+                <label>Contact person</label>
+              <input type="test" name="person" id="person" class="form-control form-control-user" >
+             </div> 
+    
+             <div class="form-group">
+                <label>Resolution date</label>
+              <input type="date" name="Rdate" id="Rdate" class="form-control form-control-user" >
+             </div> 
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="submit1" >Confirm</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  {% endblock %}
+  

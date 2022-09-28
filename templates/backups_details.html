@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+{% block content %}
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+             <h1 class="h3 mb-2 text-gray-800">Lab VMs Backups</h1>
+         
+             <a href="#" data-toggle="modal" data-target="#Addnew" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-upload fa-sm text-white-50"></i> Add New </a>
+          </div>
+          <div>
+            {% with messages = get_flashed_messages(category_filter=["success"]) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+              <div class="alert .bg-gradient-success" style="background-color:lightgreen;" role="alert" >
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4 style="color: white;">{{ message }}</h4>
+              </div>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+            {% with messages = get_flashed_messages(category_filter=["error"]) %}
+            {% if messages %}
+              <ul class=flashes>
+              {% for message in messages %}
+              <div class="alert .bg-gradient-success" style="background-color:lightcoral" role="alert" >
+                <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h4 style="color: white;">{{ message }}</h4>
+              </div>
+              {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+     
+          </div>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+      
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                  
+                      <th>ID</th>
+                      <th> Hostname</th>
+                      <th>IP</th>
+                      <th>description</th>
+                     
+                      <th>VM's host</th>
+                      <th>Backup host</th>
+                      <th>Backup location</th>
+                      <th>Backup location 2</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in data %}
+                    <tr>
+                     
+                    
+                      <td>{{item[0]}}</td>
+                      <td>{{item[1]}}</td>
+                      <td>{{item[2]}}</td>
+                      <td>{{item[3]}}</td>
+                     
+                      <td>{{item[6]}}</td>
+                     
+                  
+                      <td>{{item[7]}}</td>
+                
+                      <td>{{item[8]}}</td>
+                   
+                      <td>{{item[9]}}</td>
+                      <td><button  type='button' data-toggle="modal" data-row-val="{{item[0]}}" data-row-val1="{{item[3]}}" data-row-val2="{{item[8]}}" data-row-val3="{{item[9]}}"  data-target="#shutdownall" class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Update </button></td>
+                    
+                    </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; FN LabSupport 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    <!-- End of Content Wrapper -->
+</div>
+<!-- End of Content Wrapper -->
+
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+  
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal fade" id="Addnew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Adding Backup details</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+            <form action="{{url_for('Backup_d')}}" method="POST" id ="MN">
+          <div class="form-group">
+            <label>Hostname</label>
+          <input type="text" name="Hostname" id ="Hostname" class="form-control form-control-user" required>
+         </div> 
+          
+          <div class="form-group">
+            <label>IP</label>
+          <input type="text" name="IPad" id="IPad" class="form-control form-control-user" >
+         </div> 
+          
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="desc" id="desc" class="form-control form-control-user" >
+         </div> 
+         
+          <div class="form-group">
+            <label>OS</label>
+            <select class="form-control form-control-user" name="OS">
+              <option value="Windows">Windows</option>
+              <option value="Linux" SELECTED >Linux</option>
+              
+
+            </select>
+          </div> 
+          <div class="form-group">
+            <label>Virtualized?</label>
+            <select class="form-control form-control-user" name="virt">
+              <option value="YES">Yes</option>
+              <option value="NO" SELECTED >No</option>
+            </select>
+          </div> 
+
+          <div class="form-group">
+            <label>VM's Host</label>
+            <input type="text" name="vmhost" id="vmhost" class="form-control form-control-user" >
+         </div> 
+         <div class="form-group">
+          <label>Backup Host</label>
+          <input type="text" name="bkphost" id="bkphost" class="form-control form-control-user" >
+       </div> 
+         <div class="form-group">
+          <label>Bkp Location 1</label>
+          <input type="text" name="bkploc1" id="bkploc1" class="form-control form-control-user" >
+       </div> 
+       <div class="form-group">
+        <label>Bkp Location 2</label>
+        <input type="text" name="bkploc2" id="bkploc2" class="form-control form-control-user" >
+     </div> 
+          <!--<div class="form-group">
+            <label>Resolution Date</label>
+            <input type="date" class="form-control form-control-user" name=Rdate/>
+          </div> 
+        -->
+          
+          <div class="form-group">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  <div class="modal fade" id="shutdownall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Update Backup Details</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="{{url_for('OPALE_UPDATE')}}" method="POST" id="klo">
+                <input type="hidden" name="del" id="del" value="" >
+                   <div class="form-group">
+                <label>Machine ID</label>
+              <input type="text" id="upd" name="upd" class="form-control form-control-user" readonly>
+             </div> 
+              
+              <div class="form-group">
+                <label>Backup host description</label>
+                <input type="text" id="rcode" name="rcode" class="form-control form-control-user"  >
+             </div> 
+             
+              <div class="form-group">
+                <label>Backup Location1</label>
+                <input type="test" name="loc1" id="loc1" class="form-control form-control-user" required>
+              </div> 
+              
+              <div class="form-group">
+                <label>Backup location 2</label>
+              <input type="test" name="loc2" id="loc2" class="form-control form-control-user" required>
+             </div> 
+     
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="submit1" >Confirm</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  {% endblock %}
+  

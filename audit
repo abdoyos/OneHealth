@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+
+cd /home/ghostsrv/monitoring
+echo `pwd`
+echo "start executing the command"
+screen -S Audit ./audit_machines timisoara > /home/ghostsrv/monitoring/timisoara.log
