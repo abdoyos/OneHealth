@@ -11,14 +11,14 @@ import os
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
-app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql+pymysql://orqyNUUokU@remotemysql.com:3306/orqyNUUokU'
+app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql+pymysql://orqyNUUokU:zvFTE9hxaP@remotemysql.com:3306/orqyNUUokU'
 app.config['SQLALCHEMY_POOL_RECYCLE'] = 299
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-conn = mysql.connector.connect(user='orqyNUUokU', password='zvFTE9hxaP', host='remotemysql.com', database='orqyNUUokU',pool_name='batman',
+conn = mysql.connector.connect(user='orqyNUUokU', password='zvFTE9hxaP', host='remotemysql.com', database='orqyNUUokU',port=3306, pool_name='batman',
     pool_size = 3)
 cur = conn.cursor()
 
