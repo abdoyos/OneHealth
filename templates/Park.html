@@ -6,7 +6,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-             <h1 class="h3 mb-2 text-gray-800">Park street clinic Schedule</h1>     
+             <h1 class="h3 mb-2 text-gray-800">O1 Mall Medical Center Schedule</h1>     
           </div>
           <div>
             {% with messages = get_flashed_messages(category_filter=["success"]) %}
@@ -47,7 +47,7 @@
                       <select class="js-example-basic-single form-control  form-control-user" name="vmhost" id="vmhost" >
                         <option selected>Select Doctor Name</option>
                         {% for item in data1%}
-                        <option value="docname">{{item[0]}}</option>
+                        <option value="{{item[0]}}">{{item[1]}}</option>
                         {% endfor %}
                       </select>
                     </div>
@@ -60,7 +60,7 @@
                       <select class="form-control form-control-user" name="docid" id="docid" >
                         <option selected>Select Doctor ID</option>
                         {% for item in data2%}
-                        <option value="docid">{{item[0]}}</option>
+                        <option value="{{item[0]}}">{{item[0]}}</option>
                         {% endfor %}
                       </select>
                     </div>
@@ -100,11 +100,13 @@
                 <!--  row   -->
                 <div class="row">
                   <div class="col-lg-7">
-                <button type="submit" style="width:50%;position:relative;left:60% ;" class="btn btn-primary">Search</button>
+                <button type="submit" style="width:30%;position:relative;left:60%;height: 100%;font:menu; " class="btn btn-primary">Search</button>
+                <a href="#" data-toggle="modal" data-target="#Addnew"  style="width:30%;position:relative;left:60% ;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas  fa-upload fa-sm text-white-50"></i> Create a Schedule </a>
+                <button type="submit" style="width:30%;position:relative;left:60%;height: 100%;font:menu; " class="btn btn-success">Export to Excel</button>
               </div>
             </div>
                 <br>
-                <br>
+              
                 <div class="row">
                   
                   <!--  col-md-6   -->
@@ -114,37 +116,35 @@
                       <thead>
                         <tr>
                       
-                          <th>ID</th>
-                          <th> Hostname</th>
-                          <th>IP</th>
-                          <th>description</th>
-                         
-                          <th>VM's host</th>
-                          <th>Backup host</th>
-                          <th>Backup location</th>
-                          <th>Backup location 2</th>
-                          <th>Actions</th>
+                          <th>Doctor Name</th>
+                          <th>Doctor ID</th>
+                          <th>Speciality</th>
+                          <th>Date</th>
+                          <th>Day</th>
+                          <th>From</th>
+                          <th>TO</th>
+                          <th>Room</th>
+                          <th></th>
+
                         </tr>
                       </thead>
                       <tbody>
-                        {% for item in data %}
+                        {% for item in schedule %}
                         <tr>
                          
-                        
                           <td>{{item[0]}}</td>
                           <td>{{item[1]}}</td>
                           <td>{{item[2]}}</td>
                           <td>{{item[3]}}</td>
+                          <td>{{item[4]}}</td>
                          
-                          <td>{{item[6]}}</td>
+                          <td>{{item[5]}}</td>
                          
                       
+                          <td>{{item[6]}}</td>
                           <td>{{item[7]}}</td>
-                    
-                          <td>{{item[8]}}</td>
-                       
-                          <td>{{item[9]}}</td>
-                          <td><button  type='button' data-toggle="modal" data-row-val="{{item[0]}}" data-row-val1="{{item[3]}}" data-row-val2="{{item[8]}}" data-row-val3="{{item[9]}}"  data-target="#shutdownall" class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Update </button></td>
+                      
+                          <td><button  type='button' data-toggle="modal" data-row-val="{{item[0]}}" data-row-val1="{{item[3]}}" data-row-val2="{{item[8]}}" data-row-val3="{{item[9]}}"  data-target="#shutdownall" class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Edit </button></td>
                         
                         </tr>
                       {% endfor %}
@@ -185,6 +185,61 @@
 
     </div>
     <!-- End of Content Wrapper -->
-
+    <div class="modal fade" id="Addnew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Creating Doctor Schedule </h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          
+          <div class="modal-body">
+              <form action="{{url_for('schedule_create_o1')}}" method="POST" id ="MN">
+            <div class="form-group">
+              <label>Dockor Name</label>
+              <select class="js-example-basic-single form-control  form-control-user" name="Docname" id="Docname" required >
+                <option selected>Select Doctor Name</option>
+                {% for item in data1%}
+                <option value="{{item[0]}}">{{item[1]}}</option>
+                {% endfor %}
+              </select>
+           </div> 
+            
+            <div class="form-group">
+              <label>From</label>
+            <input  name="From" id="From" type="datetime-local" class="form-control form-control-user" required >
+           </div> 
+            
+            <div class="form-group">
+              <label>To</label>
+              <input  name="To" id="To" type="datetime-local" class="form-control form-control-user" required>
+           </div> 
+           
+            <div class="form-group">
+              <label>Room No.</label>
+              <input type="text" name="room" id="room"  class="form-control form-control-user" required>
+            </div> 
+          
+            <div class="form-group">
+              <label>Comments</label>
+              <textarea  name="comm" id="comm"  class="form-control form-control-user" ></textarea>
+            </div> 
+            <!--<div class="form-group">
+              <label>Resolution Date</label>
+              <input type="date" class="form-control form-control-user" name=Rdate/>
+            </div> 
+          -->
+            
+            <div class="form-group">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+          </div>
+      </form>
+        </div>
+      </div>
+    </div>
+  </div>
     {% endblock %}
   
