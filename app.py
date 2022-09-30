@@ -7,19 +7,21 @@ import paramiko
 import datetime
 import json
 import os
+import psycopg2
 
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
-app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql+pymysql://orqyNUUokU:zvFTE9hxaP@remotemysql.com:3306/orqyNUUokU'
+#app.config['SQLALCHEMY_DATABASE_URI'] =  'mysql+pymysql://orqyNUUokU:zvFTE9hxaP@remotemysql.com:3306/orqyNUUokU'
+app.config['SQLALCHEMY_DATABASE_URI'] =  'postgresql+psycopg2://wkxgscyrnnjswy:a9d5fe2a0cd9712e62c3540648ee3ded183be1dab23f166484ce09b1aa015c34@ec2-52-211-37-76.eu-west-1.compute.amazonaws.com:5432/dca9mhfsklk6b2'
 app.config['SQLALCHEMY_POOL_RECYCLE'] = 299
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-conn = mysql.connector.connect(user='orqyNUUokU', password='zvFTE9hxaP', host='remotemysql.com', database='orqyNUUokU',port=3306, pool_name='batman',
-    pool_size = 3)
+conn = psycopg2.connect(user='wkxgscyrnnjswy', password='a9d5fe2a0cd9712e62c3540648ee3ded183be1dab23f166484ce09b1aa015c34', host='ec2-52-211-37-76.eu-west-1.compute.amazonaws.com', database='dca9mhfsklk6b2',port=5432,
+    options="-c search_path=puplic,schedule")
 cur = conn.cursor()
 
 hostname = "tmwtlx91"
@@ -347,7 +349,7 @@ def schedule_create_o1():
        s_from_time = s_from.time()
        s_from_date = s_from.date()
        clinic_id = 1
-       update = "Insert into schedule(clinic_id,doc_id,Date,Day,start_time,end_time,room,comments) values(%s, %s, %s, %s,%s, %s, %s, %s)"
+       update = 'Insert into schedule.schedule(clinic_id,doc_id,"Date","Day",start_time,end_time,room,comments) values(%s, %s, %s, %s,%s, %s, %s, %s)'
        parameters= (clinic_id,int(docid),s_from_date,s_from_day,s_from_time,s_to_time,Room,comm)
        cur.execute(update,parameters)
        conn.commit()
@@ -359,11 +361,11 @@ def schedule_create_o1():
 @login_required
 def O1():
 
-      cur.execute("SELECT id,name FROM accounts where clinic_id=1 ;")
+      cur.execute("SELECT id,name FROM schedule.accounts where clinic_id=1 ;")
       data1 = cur.fetchall()
-      cur.execute("SELECT user_code FROM accounts where clinic_id=1 ;")
+      cur.execute("SELECT user_code FROM schedule.accounts where clinic_id=1 ;")
       data2= cur.fetchall()
-      cur.execute("SELECT b.name, b.user_code, b.Speciality, a.Date, a.Day, a.start_time, a.end_time, a.room from schedule a inner join accounts b on a.doc_id = b.id where b.clinic_id=1")
+      cur.execute('SELECT b.name, b.user_code, b."Speciality", a."Date", a."Day", a.start_time, a.end_time, a.room from schedule.schedule a inner join schedule.accounts b on a.doc_id = b.id where b.clinic_id=1')
       schedule = cur.fetchall()
       Title="Schedule"
       if request.method == "POST":
@@ -597,5 +599,5 @@ def logoutinactive():
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True,port=5000)
  
