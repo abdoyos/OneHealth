@@ -1,9 +1,6 @@
 from flask import Flask, render_template,redirect, flash, url_for, request,session, make_response
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from transfer import Connection
 from flask_sqlalchemy  import SQLAlchemy
 import mysql.connector
-import paramiko
 import datetime
 import json
 import os
