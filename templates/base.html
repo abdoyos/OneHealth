@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title> LAB Support | {{Title}}</title>
+    <title> {{Title}}</title>
     {% block extrahead %}  {% endblock %}
 
     <meta charset="utf-8">
@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
   
-    <title>LAB Support Timisoara</title>
+    <title>Schedule OneHealth</title>
   
     <!-- Custom fonts for this template -->
     <link href="{{url_for('.static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -296,7 +296,22 @@
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.15.1/dist/sweetalert2.all.min.js"></script>
    
      
-
+      <script>
+         $(document).on("click", ".open-AddBookDialog", function () {
+             var x = $(this).attr('data-row-val2');
+             //$(".modal-body #del").val( x );
+             document.getElementById("docn2").value = x
+             //alert(document.getElementById("docn2").value);
+        });
+        $(document).on("click", ".open-AddBookDialog", function () {
+             var x = $(this).attr('data-row-val1');
+             //$(".modal-body #del").val( x );
+             document.getElementById("docn").value = x
+             //alert(document.getElementById("docn").value);
+             //alert(x)
+        });
+       
+        </Script>
 
       <script>
 
@@ -306,46 +321,7 @@ $(document).ready(function () {
       });
   });
                 </script>
-                <script>
-                  $(document).on("click", ".open-AddBookDialog", function () {
-                       var x = $(this).attr('data-row-val');
-                       //$(".modal-body #del").val( x );
-                       document.getElementById("del").value = x
-                       //alert(document.getElementById("del").value);
-                       //alert(x)
-                  });
-                  $(document).on("click", ".open-AddBookDialog", function () {
-                       var x = $(this).attr('data-row-val');
-                       //$(".modal-body #del").val( x );
-                       document.getElementById("upd").value = x
-                       //alert(document.getElementById("del").value);
-                  });
-                  $(document).on("click", ".open-AddBookDialog", function () {
-                       var x = $(this).attr('data-row-val');
-                       //$(".modal-body #del").val( x );
-                       document.getElementById("shs").value = x
-                       //alert(document.getElementById("del").value);
-                  });
-                  $(document).on("click", ".open-AddBookDialog", function () {
-                       var x = $(this).attr('data-row-val1');
-                       //$(".modal-body #del").val( x );
-                       document.getElementById("rcode").value = x
-                       //alert(document.getElementById("rcode").value);
-                  });
-                  $(document).on("click", ".open-AddBookDialog", function () {
-                       var x = $(this).attr('data-row-val2');
-                       //$(".modal-body #del").val( x );
-                       document.getElementById("loc1").value = x
-                       //alert(document.getElementById("del").value);
-                  });
-                  $(document).on("click", ".open-AddBookDialog", function () {
-                       var x = $(this).attr('data-row-val3');
-                       //$(".modal-body #del").val( x );
-                       document.getElementById("loc2").value = x
-                       //alert(document.getElementById("del").value);
-                  });
-           
-           </script>
+               
       <script>
         $('#vmhost').on('change',function(e){
          var host = $(this).val();

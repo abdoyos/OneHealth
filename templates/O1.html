@@ -102,7 +102,7 @@
                   <div class="col-lg-7">
                 <button type="submit" style="width:30%;position:relative;left:60%;height: 100%;font:menu; " class="btn btn-primary">Search</button>
                 <a href="#" data-toggle="modal" data-target="#Addnew"  style="width:30%;position:relative;left:60% ;" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas  fa-upload fa-sm text-white-50"></i> Create a Schedule </a>
-                <button type="submit" style="width:30%;position:relative;left:60%;height: 100%;font:menu; " class="btn btn-success">Export to Excel</button>
+                <button type="button" data-toggle="modal" data-target="#extract" style="width:30%;position:relative;left:60%;height: 100%;font:menu; " class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-success">Export to Excel</button>
               </div>
             </div>
                 <br>
@@ -115,7 +115,7 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                       <thead>
                         <tr>
-                      
+                  
                           <th>Doctor Name</th>
                           <th>Doctor ID</th>
                           <th>Speciality</th>
@@ -132,7 +132,7 @@
                         {% for item in schedule %}
                         <tr>
                          
-                          <td>{{item[0]}}</td>
+                      
                           <td>{{item[1]}}</td>
                           <td>{{item[2]}}</td>
                           <td>{{item[3]}}</td>
@@ -143,8 +143,8 @@
                       
                           <td>{{item[6]}}</td>
                           <td>{{item[7]}}</td>
-                      
-                          <td><button  type='button' data-toggle="modal" data-row-val="{{item[0]}}" data-row-val1="{{item[3]}}" data-row-val2="{{item[8]}}" data-row-val3="{{item[9]}}"  data-target="#shutdownall" class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Edit </button></td>
+                          <td>{{item[8]}}</td>
+                          <td><button  type='button' data-toggle="modal" data-row-val1="{{item[0]}}" data-row-val2="{{item[1]}}"   data-target="#edit" class="open-AddBookDialog d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Edit </button></td>
                         
                         </tr>
                       {% endfor %}
@@ -241,5 +241,91 @@
       </div>
     </div>
   </div>
+
+  <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Doctor Schedule </h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+            <form action="{{url_for('schedule_edit_o1')}}" method="POST" id ="MN">
+          <div class="form-group">
+            <label>Dockor Name</label>
+            <input type="hidden" id="docn" name="docn" value="">
+            <input type="text" id="docn2" name="docn2" value="" class="form-control form-control-user" readonly>
+         </div> 
+          
+          <div class="form-group">
+            <label>From</label>
+          <input  name="From" id="From" type="datetime-local" class="form-control form-control-user" required >
+         </div> 
+          
+          <div class="form-group">
+            <label>To</label>
+            <input  name="To" id="To" type="datetime-local" class="form-control form-control-user" required>
+         </div> 
+         
+          <!--<div class="form-group">
+            <label>Room No.</label>
+            <input type="text" name="room" id="room"  class="form-control form-control-user" required>
+          </div> 
+        
+          <<div class="form-group">
+            <label>Comments</label>
+            <textarea  name="comm" id="comm"  class="form-control form-control-user" ></textarea>
+          </div> 
+          <div class="form-group">
+            <label>Resolution Date</label>
+            <input type="date" class="form-control form-control-user" name=Rdate/>
+          </div> 
+        -->
+          
+          <div class="form-group">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="extract" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Export Schedule </h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+          <form action="{{url_for('export_pandas_excel')}}" method="POST" id ="MN">
+        <div class="form-group">
+          <label>Dockor Name</label>
+          <select class="js-example-basic-single form-control  form-control-user" name="Docname" id="Docname" required >
+            <option selected>All dockor</option>
+            {% for item in data1%}
+            <option value="{{item[0]}}">{{item[1]}}</option>
+            {% endfor %}
+          </select>
+       </div> 
+        
+        
+        <div class="form-group">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-primary" type="submit" id="submit" >Confirm</button>
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+</div>
     {% endblock %}
   

@@ -6,6 +6,8 @@ import datetime
 import json
 import os
 import psycopg2
+import pandas as pd
+import io
 
 app = Flask(__name__)
 
@@ -134,10 +136,34 @@ def schedule_create_o1():
        parameters= (clinic_id,int(docid),s_from_date,s_from_day,s_from_time,s_to_time,Room,comm)
        cur.execute(update,parameters)
        conn.commit()
-       flash('New  record have been added successfully','success')
+       flash('The Scehdule have been created successfully','success')
        return redirect(url_for('O1'))
 
-   
+
+@app.route('/onheleath/Pediatrics/schedule/editO1', methods=['GET','POST'])
+@login_required
+def schedule_edit_o1():
+    
+    if request.method == "POST":
+    
+       docid = request.form.get('docn')
+       From = request.form.get('From')
+       To = request.form.get('To')
+       s_from = datetime.datetime.strptime(From, '%Y-%m-%dT%H:%M')
+       s_from_day = s_from.strftime("%A")
+       s_to = datetime.datetime.strptime(To, '%Y-%m-%dT%H:%M')
+       s_to_time = s_to.time()
+       s_from_time = s_from.time()
+       s_from_date = s_from.date()
+       clinic_id = 1
+       #update = 'update  public.schedule_new set schedule_new."Date"= ?, schedule_new."Day"= ?, schedule_new.start_time= ?, schedule_new.end_time= ? where schedule_new.doc_id= ?'.format(s_from_date,str(s_from_day),s_from_time,s_to_time,docid)
+       #parameters= (s_from_date,s_from_day,s_from_time,s_to_time,docid)
+       #cur.execute(update,parameters)
+       cur.execute('update  public.schedule_new set "Date"= %s, "Day"= %s, start_time= %s, end_time= %s where id= %s',(s_from_date,str(s_from_day),s_from_time,s_to_time,docid))
+       conn.commit()
+       flash('The Scehdule have been Edited successfully','success')
+       return redirect(url_for('O1'))
+
 @app.route('/onheleath/Pediatrics/schedule/O1_Center', methods=['GET','POST'])
 @login_required
 def O1():
@@ -146,7 +172,7 @@ def O1():
       data1 = cur.fetchall()
       cur.execute("SELECT user_code FROM public.accounts_new where clinic_id=1 ;")
       data2= cur.fetchall()
-      cur.execute('SELECT b.name, b.user_code, b."Speciality", a."Date", a."Day", a.start_time, a.end_time, a.room from public.schedule_new a inner join public.accounts_new b on a.doc_id = b.id where b.clinic_id=1')
+      cur.execute('SELECT a.id, b.name, b.user_code, b."Speciality", a."Date", a."Day", a.start_time, a.end_time, a.room from public.schedule_new a inner join public.accounts_new b on a.doc_id = b.id where b.clinic_id=1')
       schedule = cur.fetchall()
       Title="Schedule"
       if request.method == "POST":
@@ -364,6 +390,43 @@ def DailyAudit():
         else:
             flash('The Script executed successfully, email will be sent','success')
             return redirect(url_for('Timis'))
+
+@app.route('/export_pandas_excel', methods=['GET','POST'])
+@login_required
+def export_pandas_excel():
+
+    # Function is defined somewhere else
+    cur.execute('SELECT  b.name, b.user_code, b."Speciality", a."Date", a."Day", a.start_time, a.end_time, a.room from public.schedule_new a inner join public.accounts_new b on a.doc_id = b.id where b.clinic_id=1')
+    data = cur.fetchall()
+   
+    # Convert result set to pandas data frame and add columns
+    df = pd.DataFrame((tuple(t) for t in data), 
+         columns=('Name ', 'Code', 'Speciality', 'Date', 'Day','From','To','Room'))
+
+
+
+    # Creating output and writer (pandas excel writer)
+    out = io.BytesIO()
+    writer = pd.ExcelWriter(out, engine='xlsxwriter')
+
+   
+    # Export data frame to excel
+    df.to_excel(excel_writer=writer, index=False, sheet_name='Sheet1')
+    writer.save()
+    writer.close()
+
+   
+    # Flask create response 
+    r = make_response(out.getvalue())
+
+    
+    # Defining correct excel headers
+    r.headers["Content-Disposition"] = "attachment; filename=Schedule.xlsx"
+    r.headers["Content-type"] = "application/x-xls"
+
+    
+    # Finally return response
+    return r
 
 @app.route('/logout')
 @login_required
