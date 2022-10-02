@@ -139,6 +139,56 @@ def schedule_create_o1():
        flash('The Scehdule have been created successfully','success')
        return redirect(url_for('O1'))
 
+@app.route('/onheleath/Pediatrics/schedule/creationKorba', methods=['GET','POST'])
+@login_required
+def schedule_create_Korba():
+    
+    if request.method == "POST":
+    
+       docid = request.form.get('Docname')
+       From = request.form.get('From')
+       To = request.form.get('To')
+       Room = request.form.get('room')
+       comm = request.form.get('comm')
+       s_from = datetime.datetime.strptime(From, '%Y-%m-%dT%H:%M')
+       s_from_day = s_from.strftime("%A")
+       s_to = datetime.datetime.strptime(To, '%Y-%m-%dT%H:%M')
+       s_to_time = s_to.time()
+       s_from_time = s_from.time()
+       s_from_date = s_from.date()
+       clinic_id = 3
+       update = 'Insert into public.schedule_new(clinic_id,doc_id,"Date","Day",start_time,end_time,room,comments) values(%s, %s, %s, %s,%s, %s, %s, %s)'
+       parameters= (clinic_id,int(docid),s_from_date,s_from_day,s_from_time,s_to_time,Room,comm)
+       cur.execute(update,parameters)
+       conn.commit()
+       flash('The Scehdule have been created successfully','success')
+       return redirect(url_for('Korba'))
+
+@app.route('/onheleath/Pediatrics/schedule/creationPark', methods=['GET','POST'])
+@login_required
+def schedule_create_Park():
+    
+    if request.method == "POST":
+    
+       docid = request.form.get('Docname')
+       From = request.form.get('From')
+       To = request.form.get('To')
+       Room = request.form.get('room')
+       comm = request.form.get('comm')
+       s_from = datetime.datetime.strptime(From, '%Y-%m-%dT%H:%M')
+       s_from_day = s_from.strftime("%A")
+       s_to = datetime.datetime.strptime(To, '%Y-%m-%dT%H:%M')
+       s_to_time = s_to.time()
+       s_from_time = s_from.time()
+       s_from_date = s_from.date()
+       clinic_id = 4
+       update = 'Insert into public.schedule_new(clinic_id,doc_id,"Date","Day",start_time,end_time,room,comments) values(%s, %s, %s, %s,%s, %s, %s, %s)'
+       parameters= (clinic_id,int(docid),s_from_date,s_from_day,s_from_time,s_to_time,Room,comm)
+       cur.execute(update,parameters)
+       conn.commit()
+       flash('The Scehdule have been created successfully','success')
+       return redirect(url_for('Park'))
+
 
 @app.route('/onheleath/Pediatrics/schedule/editO1', methods=['GET','POST'])
 @login_required
@@ -174,114 +224,84 @@ def O1():
       data2= cur.fetchall()
       cur.execute('SELECT a.id, b.name, b.user_code, b."Speciality", a."Date", a."Day", a.start_time, a.end_time, a.room from public.schedule_new a inner join public.accounts_new b on a.doc_id = b.id where b.clinic_id=1')
       schedule = cur.fetchall()
-      Title="Schedule"
-      if request.method == "POST":
-            import socket
-         #try:
-            vmhost = request.form.get('vmhost')
-            bkphost = request.form.get('bkphost')
-            holo = request.form.get('holo')
-            bkptype = request.form.get('bkptype')
-            loc1 = request.form.get('loc1')
-            loc2 = request.form.get('loc2')
-            bkpserver = "tmdepot"
-            #ip_address = socket.gethostbyname(vmhost)
-            myssh = Connection(host=hostname, username=username, password=password)
-            if bkptype=="Proxmox":
-                version = myssh.execute(command= "ssh {0} -l ghostsrv cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2".format(bkpserver,vmhost,loc1,loc2))
-   
-            elif bkptype=="ESXi":
-                version = myssh.execute(command= 'ssh {0} -l ghostsrv  /bin/sh -c "cd /home/ghostsrv; ./esxidump.bash {1} {2} {3}" >> ESXI_backup_log.log'.format(bkpserver,vmhost,loc1,loc2))
-                
-            else:
-                version = myssh.execute(command= "ssh {0} -l ghostsrv cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2".format(bkpserver,vmhost,loc1,loc2))
-         
-            
-            flash('Host:'+ str(vmhost)+' '+ 'Version:' + str(version[0]).split("'")[1].replace('"',''),'success')
-            #flash('IP address is'+' '+ ip_address +'','success')
-            return redirect(url_for('create_backup'))
-         #except:
-          #    flash('The Host'+': '+ vmhost +' '+'is not available','error')
-           #   return redirect(url_for('create_backup'))
+      Title="Schedule O1"
 
-      return render_template('O1.html',data1=data1,data2=data2,schedule=schedule,Title=Title)
+      return render_template('O1.html',data1=data1,data2=data2,schedule=schedule,name=current_user.name,Title=Title)
 
 @app.route('/onheleath/Pediatrics/schedule/Korba_Center', methods=['GET','POST'])
 @login_required
 def Korba():
 
-      #cur.execute("SELECT host FROM timisoara ;")
-      #data1 = cur.fetchall()
-      Title="Schedule"
-      if request.method == "POST":
-            import socket
-         #try:
-            vmhost = request.form.get('vmhost')
-            bkphost = request.form.get('bkphost')
-            holo = request.form.get('holo')
-            bkptype = request.form.get('bkptype')
-            loc1 = request.form.get('loc1')
-            loc2 = request.form.get('loc2')
-            bkpserver = "tmdepot"
-            #ip_address = socket.gethostbyname(vmhost)
-            myssh = Connection(host=hostname, username=username, password=password)
-            if bkptype=="Proxmox":
-                version = myssh.execute(command= "ssh {0} -l ghostsrv cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2".format(bkpserver,vmhost,loc1,loc2))
-   
-            elif bkptype=="ESXi":
-                version = myssh.execute(command= 'ssh {0} -l ghostsrv  /bin/sh -c "cd /home/ghostsrv; ./esxidump.bash {1} {2} {3}" >> ESXI_backup_log.log'.format(bkpserver,vmhost,loc1,loc2))
-                
-            else:
-                version = myssh.execute(command= "ssh {0} -l ghostsrv cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2".format(bkpserver,vmhost,loc1,loc2))
-         
-            
-            flash('Host:'+ str(vmhost)+' '+ 'Version:' + str(version[0]).split("'")[1].replace('"',''),'success')
-            #flash('IP address is'+' '+ ip_address +'','success')
-            return redirect(url_for('create_backup'))
-         #except:
-          #    flash('The Host'+': '+ vmhost +' '+'is not available','error')
-           #   return redirect(url_for('create_backup'))
+      cur.execute("SELECT id,name FROM public.accounts_new where clinic_id=3 ;")
+      data1 = cur.fetchall()
+      cur.execute("SELECT user_code FROM public.accounts_new where clinic_id=3 ;")
+      data2= cur.fetchall()
+      cur.execute('SELECT a.id, b.name, b.user_code, b."Speciality", a."Date", a."Day", a.start_time, a.end_time, a.room from public.schedule_new a inner join public.accounts_new b on a.doc_id = b.id where b.clinic_id=3')
+      schedule = cur.fetchall()
+      Title="Schedule Korba"
 
-      return render_template('Korba.html', Title=Title)
+      return render_template('Korba.html',data1=data1,data2=data2,schedule=schedule,name=current_user.name,Title=Title)
 
 @app.route('/onheleath/Pediatrics/schedule/Park_clinic', methods=['GET','POST'])
 @login_required
 def Park():
 
-      #cur.execute("SELECT host FROM timisoara ;")
-      #data1 = cur.fetchall()
-      Title="Schedule"
-      if request.method == "POST":
-            import socket
-         #try:
-            vmhost = request.form.get('vmhost')
-            bkphost = request.form.get('bkphost')
-            holo = request.form.get('holo')
-            bkptype = request.form.get('bkptype')
-            loc1 = request.form.get('loc1')
-            loc2 = request.form.get('loc2')
-            bkpserver = "tmdepot"
-            #ip_address = socket.gethostbyname(vmhost)
-            myssh = Connection(host=hostname, username=username, password=password)
-            if bkptype=="Proxmox":
-                version = myssh.execute(command= "ssh {0} -l ghostsrv cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2".format(bkpserver,vmhost,loc1,loc2))
-   
-            elif bkptype=="ESXi":
-                version = myssh.execute(command= 'ssh {0} -l ghostsrv  /bin/sh -c "cd /home/ghostsrv; ./esxidump.bash {1} {2} {3}" >> ESXI_backup_log.log'.format(bkpserver,vmhost,loc1,loc2))
-                
-            else:
-                version = myssh.execute(command= "ssh {0} -l ghostsrv cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2".format(bkpserver,vmhost,loc1,loc2))
-         
-            
-            flash('Host:'+ str(vmhost)+' '+ 'Version:' + str(version[0]).split("'")[1].replace('"',''),'success')
-            #flash('IP address is'+' '+ ip_address +'','success')
-            return redirect(url_for('create_backup'))
-         #except:
-          #    flash('The Host'+': '+ vmhost +' '+'is not available','error')
-           #   return redirect(url_for('create_backup'))
+      cur.execute("SELECT id,name FROM public.accounts_new where clinic_id=4 ;")
+      data1 = cur.fetchall()
+      cur.execute("SELECT user_code FROM public.accounts_new where clinic_id=4 ;")
+      data2= cur.fetchall()
+      cur.execute('SELECT a.id, b.name, b.user_code, b."Speciality", a."Date", a."Day", a.start_time, a.end_time, a.room from public.schedule_new a inner join public.accounts_new b on a.doc_id = b.id where b.clinic_id=4')
+      schedule = cur.fetchall()
+      Title="Schedule Park"
 
-      return render_template('Park.html', Title=Title)
+      return render_template('Park.html',data1=data1,data2=data2,schedule=schedule,name=current_user.name,Title=Title)
+@app.route('/onheleath/Pediatrics/schedule/editkorba', methods=['GET','POST'])
+@login_required
+def schedule_edit_korba():
+    
+    if request.method == "POST":
+    
+       docid = request.form.get('docn')
+       From = request.form.get('From')
+       To = request.form.get('To')
+       s_from = datetime.datetime.strptime(From, '%Y-%m-%dT%H:%M')
+       s_from_day = s_from.strftime("%A")
+       s_to = datetime.datetime.strptime(To, '%Y-%m-%dT%H:%M')
+       s_to_time = s_to.time()
+       s_from_time = s_from.time()
+       s_from_date = s_from.date()
+       clinic_id = 1
+       #update = 'update  public.schedule_new set schedule_new."Date"= ?, schedule_new."Day"= ?, schedule_new.start_time= ?, schedule_new.end_time= ? where schedule_new.doc_id= ?'.format(s_from_date,str(s_from_day),s_from_time,s_to_time,docid)
+       #parameters= (s_from_date,s_from_day,s_from_time,s_to_time,docid)
+       #cur.execute(update,parameters)
+       cur.execute('update  public.schedule_new set "Date"= %s, "Day"= %s, start_time= %s, end_time= %s where id= %s',(s_from_date,str(s_from_day),s_from_time,s_to_time,docid))
+       conn.commit()
+       flash('The Scehdule have been Edited successfully','success')
+       return redirect(url_for('Korba'))
 
+@app.route('/onheleath/Pediatrics/schedule/editpark', methods=['GET','POST'])
+@login_required
+def schedule_edit_park():
+    
+    if request.method == "POST":
+    
+       docid = request.form.get('docn')
+       From = request.form.get('From')
+       To = request.form.get('To')
+       s_from = datetime.datetime.strptime(From, '%Y-%m-%dT%H:%M')
+       s_from_day = s_from.strftime("%A")
+       s_to = datetime.datetime.strptime(To, '%Y-%m-%dT%H:%M')
+       s_to_time = s_to.time()
+       s_from_time = s_from.time()
+       s_from_date = s_from.date()
+       clinic_id = 1
+       #update = 'update  public.schedule_new set schedule_new."Date"= ?, schedule_new."Day"= ?, schedule_new.start_time= ?, schedule_new.end_time= ? where schedule_new.doc_id= ?'.format(s_from_date,str(s_from_day),s_from_time,s_to_time,docid)
+       #parameters= (s_from_date,s_from_day,s_from_time,s_to_time,docid)
+       #cur.execute(update,parameters)
+       cur.execute('update  public.schedule_new set "Date"= %s, "Day"= %s, start_time= %s, end_time= %s where id= %s',(s_from_date,str(s_from_day),s_from_time,s_to_time,docid))
+       conn.commit()
+       flash('The Scehdule have been Edited successfully','success')
+       return redirect(url_for('Park'))
 
 @app.route('/LabSupport/create_backup/<host>/', methods=['GET','POST'])
 @login_required
@@ -421,12 +441,89 @@ def export_pandas_excel():
 
     
     # Defining correct excel headers
-    r.headers["Content-Disposition"] = "attachment; filename=Schedule.xlsx"
+    r.headers["Content-Disposition"] = "attachment; filename=Schedule_O1.xlsx"
     r.headers["Content-type"] = "application/x-xls"
 
     
     # Finally return response
     return r
+
+
+@app.route('/export_pandas_excel_korba', methods=['GET','POST'])
+@login_required
+def export_pandas_excel_korba():
+
+    # Function is defined somewhere else
+    cur.execute('SELECT  b.name, b.user_code, b."Speciality", a."Date", a."Day", a.start_time, a.end_time, a.room from public.schedule_new a inner join public.accounts_new b on a.doc_id = b.id where b.clinic_id=3')
+    data = cur.fetchall()
+   
+    # Convert result set to pandas data frame and add columns
+    df = pd.DataFrame((tuple(t) for t in data), 
+         columns=('Name ', 'Code', 'Speciality', 'Date', 'Day','From','To','Room'))
+
+
+
+    # Creating output and writer (pandas excel writer)
+    out = io.BytesIO()
+    writer = pd.ExcelWriter(out, engine='xlsxwriter')
+
+   
+    # Export data frame to excel
+    df.to_excel(excel_writer=writer, index=False, sheet_name='Sheet1')
+    writer.save()
+    writer.close()
+
+   
+    # Flask create response 
+    r = make_response(out.getvalue())
+
+    
+    # Defining correct excel headers
+    r.headers["Content-Disposition"] = "attachment; filename=Schedule_korba.xlsx"
+    r.headers["Content-type"] = "application/x-xls"
+
+    
+    # Finally return response
+    return r
+
+
+@app.route('/export_pandas_excel_park', methods=['GET','POST'])
+@login_required
+def export_pandas_excel_park():
+
+    # Function is defined somewhere else
+    cur.execute('SELECT  b.name, b.user_code, b."Speciality", a."Date", a."Day", a.start_time, a.end_time, a.room from public.schedule_new a inner join public.accounts_new b on a.doc_id = b.id where b.clinic_id=4')
+    data = cur.fetchall()
+   
+    # Convert result set to pandas data frame and add columns
+    df = pd.DataFrame((tuple(t) for t in data), 
+         columns=('Name ', 'Code', 'Speciality', 'Date', 'Day','From','To','Room'))
+
+
+
+    # Creating output and writer (pandas excel writer)
+    out = io.BytesIO()
+    writer = pd.ExcelWriter(out, engine='xlsxwriter')
+
+   
+    # Export data frame to excel
+    df.to_excel(excel_writer=writer, index=False, sheet_name='Sheet1')
+    writer.save()
+    writer.close()
+
+   
+    # Flask create response 
+    r = make_response(out.getvalue())
+
+    
+    # Defining correct excel headers
+    r.headers["Content-Disposition"] = "attachment; filename=Schedule_park.xlsx"
+    r.headers["Content-type"] = "application/x-xls"
+
+    
+    # Finally return response
+    return r
+
 
 @app.route('/logout')
 @login_required
