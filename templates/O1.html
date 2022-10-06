@@ -308,9 +308,9 @@
       <div class="modal-body">
           <form action="{{url_for('export_pandas_excel')}}" method="POST" id ="MN">
         <div class="form-group">
-          <label>Dockor Name</label>
+          <label>Doctor Name</label>
           <select class="js-example-basic-single form-control  form-control-user" name="Docname" id="Docname" required >
-            <option selected>All dockor</option>
+            <option selected>All doctor</option>
             {% for item in data1%}
             <option value="{{item[0]}}">{{item[1]}}</option>
             {% endfor %}
