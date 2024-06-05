@@ -24,10 +24,6 @@ conn = psycopg2.connect(user='wkxgscyrnnjswy', password='a9d5fe2a0cd9712e62c3540
     options="-c search_path=puplic,schedule")
 cur = conn.cursor()
 
-hostname = "tmwtlx91"
-username = "ghostsrv"
-password = "ghostsrv"
-
 
 
 
@@ -303,113 +299,7 @@ def schedule_edit_park():
        flash('The Scehdule have been Edited successfully','success')
        return redirect(url_for('Park'))
 
-@app.route('/LabSupport/create_backup/<host>/', methods=['GET','POST'])
-@login_required
-def get_OS(host):
 
-     myssh = Connection(host=hostname, username=username, password=password)
-     version = myssh.execute(command= "ssh {} -l ghostsrv  cat /etc/os-release | grep PRETTY_NAME | cut -d'=' -f2".format(host))          
-     if len(version) > 2 :
-       data = str(str(version).split('"')[1])
-     else:
-          data = "The VM is not available"
-
-     response = make_response(json.dumps(data))
-     response.content_type = 'application/json'
-     return response
-
-@app.route('/LabSupport/Monitoring/UPDATE/Tickets', methods=['GET','POST'])
-@login_required
-def OPALE_UPDATE():
-    
-    cur.execute("select  *  from OPALE;")
-    data = cur.fetchall()
-    if request.method == "POST":
-       delo = request.form.get('upd')
-       person = request.form.get('person')
-       Status = request.form.get('Status1')
-       Escalated = request.form.get('Escalated1')
-       Rdate = request.form.get('Rdate')
-       update = "update OPALE set Status=%s, Escelated=%s, Contact_person=%s, resolution_date=%s where id =%s" 
-       parameters= (Status,Escalated,person,Rdate,delo)
-       cur.execute(update,parameters)
-       conn.commit()
-       flash('The Ticket have been Updated successfully','success')
-       return redirect(url_for('OPALE'))
-
-
-@app.route('/LabSupport/Monitoring/Update', methods=['GET','POST'])
-@login_required
-def Updates():
-
-    if request.method == "POST":
-       host = request.form.get('upd')
-       com = request.form.get('com')
-       AC = request.form.get('AC')
-       WS = request.form.get('WS')
-       JP = request.form.get('JP')
-       IG = request.form.get('IG')
-       FL = request.form.get('FL')
-       SH = request.form.get('SH')
-       update = "update timisoara set comment=%s, access=%s, type=%s, just_ping=%s, timisoara.ignore=%s, aut_fail=%s, del='N', shutdown=%s  where host= %s"
-       parameters= (com,AC,WS,JP,IG,FL,SH,host)
-       cur.execute(update,parameters)
-       conn.commit()
-       flash('The host have been Updated successfully','success')
-       return redirect(url_for('Timis'))
-
-@app.route('/LabSupport/Monitoring/Insert', methods=['GET','POST'])
-@login_required
-def add():
-
-    if request.method == "POST":
-       host = request.form.get('upd')
-       com = request.form.get('com')
-       AC = request.form.get('AC')
-       WS = request.form.get('WS')
-       JP = request.form.get('JP')
-       IG = request.form.get('IG')
-       FL = request.form.get('FL')
-       SH = request.form.get('SH')
-       update = "Insert into timisoara(host,comment,access,type,just_ping,timisoara.ignore,aut_fail,del,shutdown) values(%s, %s, %s, %s, %s, %s, %s,'N', %s)"
-       parameters= (host,com,AC,WS,JP,IG,FL,SH)
-       cur.execute(update,parameters)
-       conn.commit()
-       flash('The host have been Added successfully','success')
-       return redirect(url_for('Timis'))
-
-@app.route('/LabSupport/Monitoring/delete', methods=['GET','POST'])
-@login_required
-def delete():
-     
-    if request.method == "POST":
-       hostname = request.form.get('del')
-       cur.execute("update timisoara set del='Y' where host= %s ",(hostname,))
-       flash('The host have been deleted successfully','success')
-       return redirect(url_for('Timis'))
-
-@app.route('/LabSupport/Monitoring/daily/Monitoring', methods=['GET','POST'])
-@login_required
-def DailyAudit():
-     
-     hostname = "tmwtlx91-temp"
-     username = "ghostsrv"
-     password = "ghostsrv" 
-     if request.method == "POST":
-        myssh = Connection(host=hostname, username="root", private_key = 'C:/users/ababdell/desktop/test_transfer/id_rsa') #password=password)
-        if myssh:
-            #myssh.put("audit")
-            #myssh.execute(command="chmod 777 audit ")
-            #myssh.execute(command="sed -i -e 's/\r$//' audit ")
-            myssh.execute(command="./audit") 
-            myssh.execute(command="screen -d") 
-            #Command = myssh.execute(command="screen -S Audit ./home/ghostsrv/monitoring/audit_machines timisoara > /home/ghostsrv/monitoring/timisoara.log")
-            #flash(Command2,'success')
-            flash('The script executed successfully, An email will be sent shortly','success')
-            return redirect(url_for('Timis'))
-        else:
-            flash('The Script executed successfully, email will be sent','success')
-            return redirect(url_for('Timis'))
 
 @app.route('/export_pandas_excel', methods=['GET','POST'])
 @login_required
